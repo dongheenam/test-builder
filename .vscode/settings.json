@@ -1,0 +1,7 @@
+{
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false
+  }
+}

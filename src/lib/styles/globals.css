@@ -36,37 +36,25 @@ select {
   font: inherit;
   color: var(--black);
   background-color: var(--bg);
-  border: 1px solid var(--gray7);
+
   text-decoration: none;
 
   &:focus {
     outline: 3px solid var(--primary8);
   }
 }
+input,
+textarea,
+select {
+  border: 1px solid var(--gray7);
+}
 button {
-  border: none;
   cursor: pointer;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-.anchor {
-  color: var(--primary11);
-  text-decoration: underline;
-
-  &:hover,
-  &:active {
-    color: var(--primary12);
-    text-decoration: none;
-  }
-
-  &:focus-visible {
-    color: var(--bg);
-    background-color: var(--primary9);
-  }
 }
 
 .btn {

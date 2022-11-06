@@ -1,129 +1,119 @@
 <script>
-	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
-	import github from '$lib/images/github.svg';
+  import { page } from "$app/stores";
+
+  const routes = [
+    { href: "/", label: "Home" },
+    { href: "/questions", label: "Questions" },
+    { href: "/tests", label: "Tests" },
+  ];
 </script>
 
 <header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div>
-
-	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Home</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a href="/about">About</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-				<a href="/sverdle">Sverdle</a>
-			</li>
-		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
-
-	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
-		</a>
-	</div>
+  <div class="title">
+    <span class="title-logo">MathTestBuilder</span>
+    <span class="title-version">v0.2.beta</span>
+  </div>
+  <div class="menu">
+    <div class="menu-user">
+      <a href="/auth/login">Log in</a>
+    </div>
+    <nav>
+      <ul class="nav-list">
+        {#each routes as { href, label }}
+          <li>
+            <a class="nav-item" {href} data-active={$page.url.pathname === href}
+              >{label}</a
+            >
+          </li>
+        {/each}
+      </ul>
+    </nav>
+  </div>
 </header>
 
-<style>
-	header {
-		display: flex;
-		justify-content: space-between;
-	}
+<style lang="postcss">
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    padding: 0 1.5rem;
 
-	.corner {
-		width: 3em;
-		height: 3em;
-	}
+    background-color: var(--white);
+    box-shadow: var(--shadow-xs);
 
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
 
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
-	}
+  /* left-side */
+  .title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .title-logo {
+    font-size: var(--size-h2);
+    font-weight: 300;
 
-	nav {
-		display: flex;
-		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
-	}
+    color: inherit;
+    text-decoration: none;
+  }
+  .title-version {
+    padding: 0.125rem 0.5rem;
+    font-size: var(--size-sm);
+    font-weight: 500;
+    background-color: var(--gray6);
+    /* half of total height */
+    border-radius: calc(2 * 0.125rem + var(--size-sm) / 2);
+  }
 
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
+  /* right-side */
+  .menu {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+  .menu-user {
+    text-align: right;
+    padding: 0.5rem 1rem;
+  }
+  .nav-list {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+  }
 
-	path {
-		fill: var(--background);
-	}
+  .nav-item {
+    position: relative;
+    display: block;
 
-	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		height: 3em;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		list-style: none;
-		background: var(--background);
-		background-size: contain;
-	}
+    font-weight: 600;
+    text-transform: uppercase;
 
-	li {
-		position: relative;
-		height: 100%;
-	}
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid var(--gray7);
 
-	li[aria-current='page']::before {
-		--size: 6px;
-		content: '';
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-		border-top: var(--size) solid var(--color-theme-1);
-	}
+    &:not([data-disabled="true"]) {
+      &:hover {
+        background-color: var(--gray4);
+      }
+      &:focus {
+        outline: 3px solid var(--primary8);
+        z-index: 10;
+      }
+    }
 
-	nav a {
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 0.5rem;
-		color: var(--color-text);
-		font-weight: 700;
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		text-decoration: none;
-		transition: color 0.2s linear;
-	}
-
-	a:hover {
-		color: var(--color-theme-1);
-	}
+    &[data-active="true"] {
+      color: var(--primary11);
+      border-bottom: 4px solid var(--primary8);
+    }
+    &:not([data-active="true"]) {
+      padding-bottom: calc(0.5rem + 2px);
+    }
+  }
 </style>
