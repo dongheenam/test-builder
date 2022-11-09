@@ -49,6 +49,7 @@ select {
   border: 1px solid var(--gray7);
 }
 button {
+  border: none;
   cursor: pointer;
 }
 

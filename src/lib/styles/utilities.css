@@ -120,3 +120,20 @@
 .btn--primary {
   composes: bg bg-ia text text-ia;
 }
+
+/* input labels */
+.label {
+  font-size: var(--size-sm);
+  font-weight: 600;
+  margin-bottom: 0.4em;
+}
+
+/* cards */
+.card {
+  width: 100%;
+  padding: 16px;
+
+  background-color: var(--bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-xs);
+}
