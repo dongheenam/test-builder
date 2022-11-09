@@ -2,9 +2,9 @@
   import { page } from "$app/stores";
 
   const routes = [
-    { href: "/", label: "Home" },
-    { href: "/questions", label: "Questions" },
-    { href: "/tests", label: "Tests" },
+    { href: "/", label: "Home", disabled: false },
+    { href: "/questions", label: "Questions", disabled: false },
+    { href: "/tests", label: "Tests", disabled: true },
   ];
 </script>
 
@@ -15,14 +15,17 @@
   </div>
   <div class="menu">
     <div class="menu-user">
-      <a href="/auth/login">Log in</a>
+      <a href="/">Log in</a>
     </div>
     <nav>
       <ul class="nav-list">
-        {#each routes as { href, label }}
+        {#each routes as { href, label, disabled }}
           <li>
-            <a class="nav-item" {href} data-active={$page.url.pathname === href}
-              >{label}</a
+            <a
+              class="nav-item"
+              {href}
+              data-active={$page.url.pathname === href}
+              data-disabled={disabled}>{label}</a
             >
           </li>
         {/each}

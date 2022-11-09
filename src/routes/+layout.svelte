@@ -1,5 +1,4 @@
 <script>
-  import "$lib/styles/globals.css";
   import Header from "./Header.svelte";
   import Footer from "./Footer.svelte";
 </script>
@@ -17,7 +16,10 @@
 </div>
 
 <!-- STYLE -->
-<style>
+<style lang="postcss">
+  @import "$lib/styles/globals.css";
+  @import "$lib/styles/utilities.css";
+
   #app {
     min-height: 100%;
     width: 100%;
