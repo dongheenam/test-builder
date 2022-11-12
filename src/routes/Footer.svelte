@@ -1,5 +1,5 @@
 <script>
-  import Anchor from "$lib/components/Anchor.svelte";
+  import { Anchor } from "$lib/components";
 </script>
 
 <footer class="text--gray">
