@@ -2,7 +2,7 @@
   import { isObject } from "$lib/utils";
 
   /** @type {string | undefined} */
-  export let label;
+  export let label = undefined;
 
   /** @type {string | undefined} */
   export let name = label?.toLowerCase();
@@ -19,7 +19,9 @@
 </script>
 
 <label>
-  <span class="label">{label}</span>
+  {#if label}
+    <span class="label">{label}</span>
+  {/if}
   <select {name} bind:value={selected} on:change={() => console.log(selected)}>
     {#each items as { value, label: name }}
       <option {value}>{name}</option>
