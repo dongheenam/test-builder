@@ -6,7 +6,9 @@
   <meta name="description" content="Write Maths tests" />
 </svelte:head>
 
-<main>Hello!</main>
+<main>
+  <h1>Hello!</h1>
+</main>
 
 <style>
 </style>

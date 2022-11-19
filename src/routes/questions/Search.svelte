@@ -1,15 +1,6 @@
 <script context="module">
-  const YEARS = ["", "7", "8", "9", "10", "11", "12"];
-  const TOPICS = {
-    "": "",
-    NUM: "number",
-    ALG: "algebra",
-    MEAS: "measurement",
-    GEO: "geometry",
-    STAT: "statistics",
-    PROB: "probability",
-    CALC: "calculus",
-  };
+  import { TOPICS, YEARS } from "$lib/constants";
+
   const TOPIC_OPTIONS = Object.entries(TOPICS).map(([key, val]) => ({
     value: key,
     label: val,
@@ -17,7 +8,7 @@
 </script>
 
 <script>
-  import { Select, SelectMultiple } from "$lib/components";
+  import { Button, Select, SelectMultiple } from "$lib/components";
   import TextInput from "$lib/components/TextInput.svelte";
 
   /** @type {svelte.JSX.EventHandler<SubmitEvent, HTMLFormElement>} */
@@ -43,6 +34,7 @@
       <TextInput label="Text" />
     </div>
     <button type="submit" class="btn bg-filled bg-filled-ia">Submit</button>
+    <Button>Reset</Button>
   </form>
 </div>
 

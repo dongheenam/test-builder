@@ -2,22 +2,48 @@
   import Icon from "./Icon.svelte";
 
   export let checked = false;
-  export let indeterminate = true;
+  export let indeterminate = false;
   export let disabled = false;
+
+  /** @type {null | (() => void) } */
+  export let onChange = null;
+
+  /** @type {"nm" | "sm" | "xs"} */
+  export let size = "nm";
+
+  const heightChart = { nm: 24, sm: 20, xs: 16 };
+  $: height = heightChart[size];
+
+  $: iconProps = {
+    height: height,
+  };
 </script>
 
-<label>
-  <input type="checkbox" bind:checked bind:indeterminate {disabled} />
+<label style:--height={`${height}px`}>
+  <input
+    type="checkbox"
+    bind:checked
+    bind:indeterminate
+    on:change={onChange}
+    {disabled}
+    {...$$restProps}
+  />
   <span class="icon-checkbox">
     {#if !checked && !indeterminate}
       <!-- empty checkbox -->
-      <Icon icon="fluent:checkbox-unchecked-24-regular" />
+      <Icon
+        icon={`fluent:checkbox-unchecked-${height}-regular`}
+        {...iconProps}
+      />
     {:else if checked}
       <!-- checked -->
-      <Icon icon="fluent:checkbox-checked-24-filled" />
+      <Icon icon={`fluent:checkbox-checked-${height}-filled`} />
     {:else}
       <!-- indeterminate -->
-      <Icon icon="fluent:checkbox-indeterminate-24-regular" />
+      <Icon
+        icon={`fluent:checkbox-indeterminate-${height}-regular`}
+        {...iconProps}
+      />
     {/if}
   </span>
 </label>
@@ -33,19 +59,18 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 1.25em;
-    height: 1.25em;
+    width: var(--height);
+    height: var(--height);
     opacity: 0;
   }
 
   .icon-checkbox {
-    font-size: 1.25em;
+    font-size: var(--height);
     /* prevent layout shift when the icon changes */
     width: 1em;
     height: 1em;
-
-    display: flex;
-    place-items: center;
+    color: var(--gray11);
+    border-radius: var(--radius-item);
 
     input:checked ~ &,
     input:indeterminate ~ & {
@@ -54,11 +79,11 @@
 
     input:hover ~ & {
       color: var(--primary10);
+      background-color: var(--gray4);
     }
 
     input:focus ~ & {
       outline: 3px solid var(--primary8);
-      border-radius: 3px;
     }
 
     input:disabled ~ & {
