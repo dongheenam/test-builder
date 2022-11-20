@@ -5,22 +5,22 @@
   export let label;
 
   /** @type {string | undefined} */
-  export let name = label;
+  export let name = label?.toLowerCase();
 
   /** @type {string} */
-  export let text = "";
+  export let value = "";
 </script>
 
 <label>
   <span class="label">{label}</span>
   <div class="input-container">
-    <input type="text" {name} bind:value={text} />
-    {#if text.length}
+    <input type="text" {name} bind:value />
+    {#if value.length}
       <button
         tabindex="-1"
         type="button"
         on:click={() => {
-          text = "";
+          value = "";
         }}
       >
         <Icon icon="carbon:close" />

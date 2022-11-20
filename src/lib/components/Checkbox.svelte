@@ -13,10 +13,6 @@
 
   const heightChart = { nm: 24, sm: 20, xs: 16 };
   $: height = heightChart[size];
-
-  $: iconProps = {
-    height: height,
-  };
 </script>
 
 <label style:--height={`${height}px`}>
@@ -31,19 +27,13 @@
   <span class="icon-checkbox">
     {#if !checked && !indeterminate}
       <!-- empty checkbox -->
-      <Icon
-        icon={`fluent:checkbox-unchecked-${height}-regular`}
-        {...iconProps}
-      />
+      <Icon icon={`fluent:checkbox-unchecked-${height}-regular`} />
     {:else if checked}
       <!-- checked -->
       <Icon icon={`fluent:checkbox-checked-${height}-filled`} />
     {:else}
       <!-- indeterminate -->
-      <Icon
-        icon={`fluent:checkbox-indeterminate-${height}-regular`}
-        {...iconProps}
-      />
+      <Icon icon={`fluent:checkbox-indeterminate-${height}-regular`} />
     {/if}
   </span>
 </label>

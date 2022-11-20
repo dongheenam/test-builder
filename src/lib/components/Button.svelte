@@ -6,7 +6,7 @@
   export let variant = "default";
 
   /** @type {{[key: string]: string | null}} */
-  $: palette = {
+  $: vars = {
     text: null,
     textHover: null,
     bd: null,
@@ -18,14 +18,14 @@
   $: {
     switch (variant) {
       case "outline":
-        palette.bd = `currentColor`;
+        vars.bd = `currentColor`;
         break;
       case "subtle":
-        palette.bg = `var(--${color}3)`;
+        vars.bg = `var(--${color}3)`;
         break;
       case "filled":
-        palette = {
-          ...palette,
+        vars = {
+          ...vars,
           text: `var(--bg)`,
           textHover: `var(--bg)`,
           bg: `var(--${color}9)`,
@@ -38,12 +38,12 @@
 </script>
 
 <button
-  style:--btn-color={palette.text}
-  style:--btn--hover-color={palette.textHover}
-  style:--btn-bd={palette.bd}
-  style:--btn-bg={palette.bg}
-  style:--btn--hover-bg={palette.bgHover}
-  style:--btn--active-bg={palette.bgActive}
+  style:--btn-color={vars.text}
+  style:--btn--hover-color={vars.textHover}
+  style:--btn-bd={vars.bd}
+  style:--btn-bg={vars.bg}
+  style:--btn--hover-bg={vars.bgHover}
+  style:--btn--active-bg={vars.bgActive}
   {...$$restProps}
 >
   <slot />

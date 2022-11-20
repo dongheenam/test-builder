@@ -57,6 +57,7 @@
     } else {
       selected = uniqueArray(selected, input);
       options = uniqueArray(options, input).sort();
+      query = "";
     }
   };
   const toggleFocused = () => toggleItem(filteredOptions[focusedIndex]);
@@ -78,6 +79,7 @@
         toggleItem(selected[selected.length - 1]);
         break;
       case "Enter":
+      case "Space":
         toggleFocused();
         query = "";
         break;

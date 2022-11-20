@@ -2,6 +2,8 @@
   // disable type checking until questions logic is complete
   // @ts-nocheck
 
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
   import {
     Checkbox,
     CheckboxGroup,
@@ -11,46 +13,24 @@
   } from "$lib/components";
   import { SORT_OPTIONS, TOPICS, TOPIC_COLORS } from "$lib/constants";
 
-  let questions = [
-    {
-      id: "1",
-      topic: "ALG",
-      yearLevel: 8,
-      tags: ["simplify", "terms"],
-      content: "Simplify $3x + 4x + 1$",
-      isDraft: false,
-      solution: "$7x+1$",
-      authorId: "123a",
-    },
-    {
-      id: "2",
-      topic: "NUM",
-      yearLevel: 7,
-      tags: ["add", "fractions"],
-      content: "Evaluate $\\frac{1}{2} + \\frac{1}{3}$",
-      isDraft: false,
-      solution: "$\\frac{5}{6}$",
-      authorId: "123a",
-    },
-    {
-      id: "3",
-      topic: "NUM",
-      yearLevel: 7,
-      tags: ["subtract", "integers"],
-      content: "Evalute $-3-(-7)$",
-      isDraft: false,
-      solution: "$4$",
-      authorId: "123a",
-    },
-  ];
+  export let questions = [];
+  export let initialQuery;
+
+  // sort questions
+  let sort = initialQuery.sort || "-updatedAt";
+  const onSortChange = () => {
+    const url = $page.url;
+    const params = url.searchParams;
+    params.set("sort", sort);
+    goto(url);
+  };
+
+  // question checkboxes
+  let selectedQuestions = [];
   $: numQuestions = questions.length;
-
-  let selectedQuestions = ["1"];
-
   $: numSelected = selectedQuestions.length;
   $: allSelected = numQuestions === numSelected;
   $: someSelected = !allSelected && numSelected > 0;
-
   const onToggleAll = () => {
     if (allSelected) {
       selectedQuestions = [];
@@ -78,7 +58,11 @@
       showing {numQuestions} result{numQuestions === 1 ? "" : "s"}
     </div>
     <div class="header-field-sort">
-      <Select options={SORT_OPTIONS} />
+      <Select
+        options={SORT_OPTIONS}
+        bind:selected={sort}
+        onChange={() => onSortChange()}
+      />
     </div>
   </div>
 

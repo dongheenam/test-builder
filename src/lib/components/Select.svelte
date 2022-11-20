@@ -13,6 +13,9 @@
   /** @type {(typeof selected)[] | {value: (typeof selected); label: string}[]}*/
   export let options = [];
 
+  /** @type {null | (() => void) } */
+  export let onChange = null;
+
   $: items = isObject(options[0])
     ? options
     : options.map((option) => ({ value: option, label: option.toString() }));
@@ -22,7 +25,7 @@
   {#if label}
     <span class="label">{label}</span>
   {/if}
-  <select {name} bind:value={selected} on:change={() => console.log(selected)}>
+  <select {name} bind:value={selected} on:change={onChange}>
     {#each items as { value, label: name }}
       <option {value}>{name}</option>
     {/each}
