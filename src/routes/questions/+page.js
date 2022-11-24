@@ -1,6 +1,6 @@
-import { fromSearchParams } from "$lib/server/utils";
+import { fromSearchParams } from "$lib/utils";
 
-/** @type {import('./$types').PageServerLoad} */
+/** @type {import('./$types').PageLoad} */
 export const load = ({ url }) => {
   const params = url.searchParams;
   return fromSearchParams(params);
