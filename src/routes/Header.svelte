@@ -42,7 +42,7 @@
     width: 100%;
     padding: 0 1.5rem;
 
-    background-color: var(--white);
+    background-color: var(--bg);
     box-shadow: var(--shadow-xs);
 
     display: flex;

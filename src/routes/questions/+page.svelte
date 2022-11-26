@@ -1,6 +1,7 @@
 <script>
   import Search from "./Search.svelte";
   import List from "./List.svelte";
+  import Editor from "./Editor.svelte";
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -50,6 +51,7 @@
     <List {questions} initialQuery={data} />
   {/key}
 </main>
+<Editor />
 
 <style>
   main {
