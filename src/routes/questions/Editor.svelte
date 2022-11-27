@@ -1,5 +1,23 @@
 <script context="module">
+  import { writable } from "svelte/store";
   import { TOPICS, YEARS } from "$lib/constants";
+
+  // editor store
+  export const editorIsOpen = writable(false);
+  export const emptyQuestion = {
+    topic: "",
+    yearLevel: "",
+    tags: [],
+    content: "",
+    solution: "",
+  };
+  export const questionInEditor = writable(emptyQuestion);
+
+  /** @type {(question: Partial<typeof emptyQuestion>) => void} */
+  export const openEditor = (question) => {
+    questionInEditor.set({ ...emptyQuestion, ...question });
+    editorIsOpen.set(true);
+  };
 
   const TOPIC_OPTIONS = Object.entries(TOPICS).map(([key, val]) => ({
     value: key,
@@ -8,26 +26,38 @@
 </script>
 
 <script>
-  import { ButtonIcon, Select, SelectMultiple } from "$lib/components";
+  import { Button, ButtonIcon, Select, SelectMultiple } from "$lib/components";
   import Modal from "$lib/components/Modal.svelte";
 </script>
 
-<Modal open={true}>
+<Modal open={$editorIsOpen}>
   <div class="root">
     <div class="row-title">
       <h2>Edit Question</h2>
-      <ButtonIcon icon="carbon:close" size={24} />
+      <ButtonIcon
+        icon="carbon:close"
+        size={24}
+        onClick={() => ($editorIsOpen = false)}
+      />
     </div>
 
     <div class="row-fields">
       <div class="field-year">
-        <Select label="Year" options={YEARS} selected={""} />
+        <Select
+          label="Year"
+          options={YEARS}
+          bind:selected={$questionInEditor.yearLevel}
+        />
       </div>
       <div class="field-topic">
-        <Select label="Topic" options={TOPIC_OPTIONS} selected={""} />
+        <Select
+          label="Topic"
+          options={TOPIC_OPTIONS}
+          bind:selected={$questionInEditor.topic}
+        />
       </div>
       <div class="field-tags">
-        <SelectMultiple label="Tags" selected={[]} />
+        <SelectMultiple label="Tags" bind:selected={$questionInEditor.tags} />
       </div>
     </div>
 
@@ -36,7 +66,7 @@
       {#await import("$lib/components/MarkdownEditor.svelte")}
         <span>Loading the editor...</span>
       {:then MarkdownEditor}
-        <MarkdownEditor.default />
+        <MarkdownEditor.default bind:value={$questionInEditor.content} />
       {/await}
     </div>
 
@@ -45,8 +75,13 @@
       {#await import("$lib/components/MarkdownEditor.svelte")}
         <span>Loading the editor...</span>
       {:then MarkdownEditor}
-        <MarkdownEditor.default />
+        <MarkdownEditor.default bind:value={$questionInEditor.solution} />
       {/await}
+    </div>
+
+    <div class="row-btns">
+      <Button>Clear</Button>
+      <Button color="primary" variant="filled">Save question</Button>
     </div>
   </div>
 </Modal>
@@ -79,16 +114,16 @@
     min-width: 4rem;
   }
   .field-topic {
-    min-width: 4rem;
+    min-width: 9rem;
   }
   .field-tags {
     flex: 1;
   }
 
-  .row-content :global(.bytemd) {
-    height: min(450px, 30vh);
-  }
-  .row-solution :global(.bytemd) {
-    height: min(300px, 15vh);
+  .row-btns {
+    display: flex;
+    gap: 12px;
+
+    justify-content: flex-end;
   }
 </style>

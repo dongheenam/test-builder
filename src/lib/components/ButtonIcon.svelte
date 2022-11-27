@@ -7,10 +7,13 @@
   /** @type {number | string} */
   export let size = 24;
 
+  /** @type {null | (() => void) } */
+  export let onClick = null;
+
   $: height = typeof size === "number" ? `${size}px` : size;
 </script>
 
-<button style:font-size={height}>
+<button style:font-size={height} on:click={onClick}>
   <Icon {icon} />
 </button>
 

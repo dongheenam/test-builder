@@ -3,15 +3,17 @@
   export let open = false;
 </script>
 
-<div use:portal={"#app"}>
-  {#if open}
-    <div class="overlay">
-      <div class="content">
-        <slot />
+{#key open}
+  <div use:portal={"#app"} class="root">
+    {#if open}
+      <div class="overlay">
+        <div class="content">
+          <slot />
+        </div>
       </div>
-    </div>
-  {/if}
-</div>
+    {/if}
+  </div>
+{/key}
 
 <style>
   .overlay {

@@ -9,7 +9,7 @@
   import { cursor } from "@milkdown/plugin-cursor";
   import { listener, listenerCtx } from "@milkdown/plugin-listener";
   import { math } from "@milkdown/plugin-math";
-  import { menu, menuPlugin } from "@milkdown/plugin-menu";
+  import { menu, menuPlugin, defaultConfig } from "@milkdown/plugin-menu";
 
   export let value = "";
 
@@ -29,7 +29,19 @@
       .use(math)
       .use(nord)
       .use(block)
-      .use(menu)
+      .use(
+        menu.configure(menuPlugin, {
+          config: [
+            defaultConfig[2].slice(0, 2), // bold, italic
+            [
+              ...defaultConfig[3].slice(0, 2), // lists
+              ...defaultConfig[3].slice(4, 5), // list tabs
+            ],
+            defaultConfig[4].slice(1, 3), // insert image/table
+            defaultConfig[5].slice(1, 3), // divider, select parent
+          ],
+        })
+      )
       .create();
   };
 </script>

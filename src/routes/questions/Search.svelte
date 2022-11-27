@@ -8,10 +8,11 @@
 </script>
 
 <script>
+  // @ts-nocheck
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import { Button, Select, SelectMultiple } from "$lib/components";
-  import TextInput from "$lib/components/TextInput.svelte";
+  import { Button, Select, SelectMultiple, TextInput } from "$lib/components";
+  import { openEditor } from "./Editor.svelte";
   import { baseURL } from "$lib/utils";
 
   export let initialQuery;
@@ -20,21 +21,34 @@
   const tags = (initialQuery.tags && [initialQuery.tags].flat()) || [];
   const text = initialQuery.text || "";
 
+  /** @type {HTMLFormElement | null} */
+  let formElement = null;
+
   /** @type {svelte.JSX.EventHandler<SubmitEvent, HTMLFormElement>} */
   const handleSubmit = (e) => {
     if (!(e.target instanceof HTMLFormElement)) return;
     const formData = new FormData(e.target);
     const params = new URLSearchParams(
-      //@ts-ignore
       [...formData.entries()].filter(([_key, val]) => val)
     );
 
     goto(baseURL($page.url) + "?" + params.toString());
   };
+
+  const onNewQuestion = () => {
+    if (!formElement) return;
+    const formData = new FormData(formElement);
+
+    openEditor({
+      topic: formData.get("topic"),
+      yearLevel: formData.get("year"),
+      tags: formData.getAll("tags"),
+    });
+  };
 </script>
 
 <div class="card">
-  <form on:submit|preventDefault={handleSubmit}>
+  <form on:submit|preventDefault={handleSubmit} bind:this={formElement}>
     <div class="field-year">
       <Select label="Year" options={YEARS} selected={year} />
     </div>
@@ -47,8 +61,16 @@
     <div class="field-text">
       <TextInput label="Text" value={text} />
     </div>
-    <button type="submit" class="btn bg-filled bg-filled-ia">Submit</button>
-    <Button>Reset</Button>
+    <Button type="submit" variant="filled" color="primary">Submit</Button>
+    <Button type="button">Clear</Button>
+    <div class="btn-new">
+      <Button
+        type="button"
+        variant="outline"
+        color="green"
+        onClick={() => onNewQuestion()}>New Question</Button
+      >
+    </div>
   </form>
 </div>
 
@@ -56,7 +78,7 @@
   form {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 12px;
   }
 
   .field-year {
@@ -73,5 +95,9 @@
 
   .field-text {
     width: 100%;
+  }
+
+  .btn-new {
+    margin-left: auto;
   }
 </style>

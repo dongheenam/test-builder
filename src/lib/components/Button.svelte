@@ -5,6 +5,9 @@
   /** @type {"default" | "outline" | "subtle" | "filled" }*/
   export let variant = "default";
 
+  /** @type {null | (() => void) } */
+  export let onClick = null;
+
   /** @type {{[key: string]: string | null}} */
   $: vars = {
     text: null,
@@ -16,6 +19,12 @@
   };
   // variants
   $: {
+    if (color !== "gray") {
+      vars.text = `var(--${color}11)`;
+      vars.textHover = `var(--${color}12)`;
+      vars.bgHover = `var(--${color}4)`;
+      vars.bgActive = `var(--${color}5)`;
+    }
     switch (variant) {
       case "outline":
         vars.bd = `currentColor`;
@@ -44,6 +53,7 @@
   style:--btn-bg={vars.bg}
   style:--btn--hover-bg={vars.bgHover}
   style:--btn--active-bg={vars.bgActive}
+  on:click={onClick}
   {...$$restProps}
 >
   <slot />
