@@ -1,5 +1,7 @@
 <script>
-  import Icon from "./Icon.svelte";
+  import Checkbox from "carbon-icons-svelte/lib/Checkbox.svelte";
+  import CheckboxChecked from "carbon-icons-svelte/lib/CheckboxCheckedFilled.svelte";
+  import CheckboxIndeterminate from "carbon-icons-svelte/lib/CheckboxIndeterminate.svelte";
 
   export let checked = false;
   export let indeterminate = false;
@@ -8,14 +10,11 @@
   /** @type {null | (() => void) } */
   export let onChange = null;
 
-  /** @type {"nm" | "sm" | "xs"} */
-  export let size = "nm";
-
-  const heightChart = { nm: 24, sm: 20, xs: 16 };
-  $: height = heightChart[size];
+  /** @type {import("carbon-icons-svelte").CarbonIconProps["size"]} */
+  export let size = 24;
 </script>
 
-<label style:--height={`${height}px`}>
+<label>
   <input
     type="checkbox"
     bind:checked
@@ -27,15 +26,16 @@
   <span class="icon-checkbox">
     {#if !checked && !indeterminate}
       <!-- empty checkbox -->
-      <Icon icon={`fluent:checkbox-unchecked-${height}-regular`} />
+      <Checkbox {size} />
     {:else if checked}
       <!-- checked -->
-      <Icon icon={`fluent:checkbox-checked-${height}-filled`} />
+      <CheckboxChecked {size} />
     {:else}
       <!-- indeterminate -->
-      <Icon icon={`fluent:checkbox-indeterminate-${height}-regular`} />
+      <CheckboxIndeterminate {size} />
     {/if}
   </span>
+  <slot />
 </label>
 
 <style lang="postcss">
@@ -49,16 +49,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: var(--height);
-    height: var(--height);
     opacity: 0;
   }
 
   .icon-checkbox {
-    font-size: var(--height);
-    /* prevent layout shift when the icon changes */
-    width: 1em;
-    height: 1em;
     color: var(--gray11);
     border-radius: var(--radius-item);
 

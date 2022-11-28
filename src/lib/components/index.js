@@ -4,7 +4,6 @@ export { default as Button } from "./Button.svelte";
 export { default as ButtonIcon } from "./ButtonIcon.svelte";
 export { default as Checkbox } from "./Checkbox.svelte";
 export { default as CheckboxGroup } from "./CheckboxGroup.svelte";
-export { default as Icon } from "./Icon.svelte";
 export { default as MarkdownEditor } from "./MarkdownEditor.svelte";
 export { default as Modal } from "./Modal.svelte";
 export { default as Select } from "./Select.svelte";

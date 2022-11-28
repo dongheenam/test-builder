@@ -1,5 +1,5 @@
 <script>
-  import Icon from "./Icon.svelte";
+  import Close from "carbon-icons-svelte/lib/Close.svelte";
 
   /** @type {string | undefined} */
   export let label;
@@ -23,7 +23,7 @@
           value = "";
         }}
       >
-        <Icon icon="carbon:close" />
+        <Close size={16} />
       </button>
     {/if}
   </div>

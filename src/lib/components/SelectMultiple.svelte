@@ -1,6 +1,9 @@
 <script>
   import { mod, uniqueArray } from "$lib/utils";
-  import Icon from "./Icon.svelte";
+  import ChevronDown from "carbon-icons-svelte/lib/ChevronDown.svelte";
+  import Close from "carbon-icons-svelte/lib/Close.svelte";
+  import Button from "./Button.svelte";
+  import ButtonIcon from "./ButtonIcon.svelte";
 
   /** @type {string | undefined} */
   export let label;
@@ -109,7 +112,7 @@
           on:click={() => toggleItem(item)}
         >
           <span>{item}</span>
-          <Icon icon="carbon:close" />
+          <Close size={16} />
         </button>
       {/each}
       <input
@@ -124,19 +127,19 @@
       />
     </div>
     {#if selected.length}
-      <button
-        class="clear-btn"
+      <ButtonIcon
+        label="clear selection"
         tabindex="-1"
         type="button"
-        on:click={() => {
+        onClick={() => {
           selected = [];
         }}
       >
-        <Icon icon="carbon:close" />
-      </button>
+        <Close size={16} />
+      </ButtonIcon>
     {/if}
-    <span class="icon">
-      <Icon icon="carbon:chevron-down" />
+    <span class="icon-chevron">
+      <ChevronDown size={16} />
     </span>
   </div>
   <!-- options -->
@@ -187,7 +190,7 @@
     &:focus-within {
       outline: 3px solid var(--primary8);
     }
-    & *:focus {
+    & :global(*:focus) {
       outline: none;
     }
   }
@@ -203,9 +206,10 @@
 
   .item-btn {
     display: flex;
+    align-items: center;
     gap: 0.125rem;
 
-    padding: 0.125em 0.25em;
+    padding: 0.125em 0.25em 0.125em 0.5em;
     margin: 0.25rem 0;
     font-size: var(--size-sm);
     font-weight: 500;
@@ -213,18 +217,14 @@
     border: 1px solid var(--gray7);
     border-radius: 2px;
 
-    & :global(.icon) {
+    color: var(--gray11);
+    & :global(svg) {
       color: var(--gray10);
     }
   }
-  .item-btn,
-  .clear-btn {
-    color: var(--gray11);
-  }
-  .item-btn:hover,
-  .clear-btn:hover {
+  .item-btn:hover {
     background-color: var(--gray3);
-    & :global(.icon) {
+    & svg {
       color: var(--gray12);
     }
   }

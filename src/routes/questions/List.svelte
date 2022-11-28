@@ -4,6 +4,9 @@
 
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
+  import Edit from "carbon-icons-svelte/lib/Edit.svelte";
+  import TaskAdd from "carbon-icons-svelte/lib/TaskAdd.svelte";
+
   import {
     Checkbox,
     CheckboxGroup,
@@ -84,8 +87,12 @@
         </div>
         <div class="question-content">{question.content}</div>
         <div class="question-btns">
-          <ButtonIcon icon="fluent:document-edit-20-regular" size={20} />
-          <ButtonIcon icon="fluent:add-20-filled" size={20} />
+          <ButtonIcon>
+            <Edit size={20} />
+          </ButtonIcon>
+          <ButtonIcon>
+            <TaskAdd size={20} />
+          </ButtonIcon>
         </div>
       </div>
     {/each}
